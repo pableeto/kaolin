@@ -1,18 +1,3 @@
-# Copyright (c) 2019, NVIDIA CORPORATION. All rights reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# 
-# 
 # Soft Rasterizer (SoftRas)
 # 
 # Copyright (c) 2017 Hiroharu Kato
@@ -54,10 +39,10 @@ class Projection(nn.Module):
 
         if isinstance(self.P, np.ndarray):
             self.P = torch.from_numpy(self.P).cuda()
-        if self.P is None or P.ndimension() != 3 or self.P.shape[1] != 3 or self.P.shape[2] != 4:
+        if self.P is None or self.P.ndimension() != 3 or self.P.shape[1] != 3 or self.P.shape[2] != 4:
             raise ValueError('You need to provide a valid (batch_size)x3x4 projection matrix')
         if dist_coeffs is None:
-            self.dist_coeffs = torch.cuda.FloatTensor([[0., 0., 0., 0., 0.]]).repeat(P.shape[0], 1)
+            self.dist_coeffs = torch.cuda.FloatTensor([[0., 0., 0., 0., 0.]]).repeat(self.P.shape[0], 1)
 
     def forward(self, vertices):
         vertices = srf.projection(vertices, self.P, self.dist_coeffs, self.orig_size)
@@ -94,7 +79,7 @@ class Look(nn.Module):
         self.viewing_angle = viewing_angle
         self.viewing_scale = viewing_scale
         self._eye = eye
-        self.camera_direction = [0, 0, 1]
+        self.camera_direction = camera_direction
 
         if self._eye is None:
             self._eye = [0, 0, -(1. / math.tan(math.radians(self.viewing_angle)) + 1)]

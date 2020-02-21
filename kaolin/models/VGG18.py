@@ -12,16 +12,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import math
 
-import torch 
 from torch import nn 
-import torch.nn.functional as F
 
 
 class VGG18(nn.Module):
+    r"""
+    .. note::
+
+        If you use this code, please cite the original paper in addition to Kaolin.
+
+        .. code-block::
+
+            @InProceedings{Simonyan15,
+              author       = "Karen Simonyan and Andrew Zisserman",
+              title        = "Very Deep Convolutional Networks for Large-Scale Image Recognition",
+              booktitle    = "International Conference on Learning Representations",
+              year         = "2015",
+            }
+    """
+
     def __init__(self):
-        super(VGG, self).__init__()
+        super(VGG18, self).__init__()
 
         self.layer1 = nn.Sequential(
             nn.Conv2d(4, 16, kernel_size=3, padding=1), 
@@ -34,7 +46,7 @@ class VGG18(nn.Module):
             nn.ReLU(inplace=True))
 
         self.layer3 = nn.Sequential(
-            nn.Conv2d(16, 32, kernel_size=3, padding=1, stride = 2),
+            nn.Conv2d(16, 32, kernel_size=3, padding=1, stride=2),
             nn.BatchNorm2d(32), 
             nn.ReLU(inplace=True))
 
@@ -49,7 +61,7 @@ class VGG18(nn.Module):
             nn.ReLU(inplace=True))
 
         self.layer6 = nn.Sequential(
-            nn.Conv2d(32, 64, kernel_size=3, padding=1, stride = 2),
+            nn.Conv2d(32, 64, kernel_size=3, padding=1, stride=2),
             nn.BatchNorm2d(64), 
             nn.ReLU(inplace=True))
 
@@ -64,7 +76,7 @@ class VGG18(nn.Module):
             nn.ReLU(inplace=True))
 
         self.layer9 = nn.Sequential(
-            nn.Conv2d(64, 128, kernel_size=3, padding=1, stride = 2),
+            nn.Conv2d(64, 128, kernel_size=3, padding=1, stride=2),
             nn.BatchNorm2d(128),    
             nn.ReLU(inplace=True))
 
@@ -79,7 +91,7 @@ class VGG18(nn.Module):
             nn.ReLU(inplace=True))
 
         self.layer12 = nn.Sequential(
-            nn.Conv2d(128, 256, kernel_size=3, padding=1, stride = 2),
+            nn.Conv2d(128, 256, kernel_size=3, padding=1, stride=2),
             nn.BatchNorm2d(256),    
             nn.ReLU(inplace=True))
 
@@ -88,14 +100,13 @@ class VGG18(nn.Module):
             nn.BatchNorm2d(256),
             nn.ReLU(inplace=True))
 
-    
         self.layer14 = nn.Sequential(
             nn.Conv2d(256, 256, kernel_size=3, padding=1),
             nn.BatchNorm2d(256),
             nn.ReLU(inplace=True))
 
         self.layer15 = nn.Sequential(
-            nn.Conv2d(256, 512, kernel_size=3, padding=1, stride = 2),
+            nn.Conv2d(256, 512, kernel_size=3, padding=1, stride=2),
             nn.BatchNorm2d(512),
             nn.ReLU(inplace=True))
 
@@ -136,4 +147,4 @@ class VGG18(nn.Module):
         x = self.layer17(x)
         D = self.layer18(x)
 
-        return [A,B,C,D]
+        return [A, B, C, D]

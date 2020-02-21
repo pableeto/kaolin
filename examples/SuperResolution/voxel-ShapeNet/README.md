@@ -1,34 +1,19 @@
 # Example: voxel-superresolution
 
-These example scripts lets you train a voxel superresolution network on the ShapeNet Dataset using a simple encoder-decoder network. There are two training schemes, one using MSE loss and the other using negative log likelihood loss. 
+These example scripts let you train a voxel superresolution network on the ShapeNet Dataset using a simple encoder-decoder network. The task for the network is to take a low-resolution voxelized object as input and output a high resolution voxelized object.
 
 
-### Training the network: MSE
+### Training the network
 
-To train using MSE run
+To train:
 ```
-python train_MSE.py
-```
-
-
-### Evaluating the network: MSE
-
-To evaluate a trained MSE model run 
-```
-python eval_MSE.py
-```
-
-### Training the network: NLLL
-
-To train using NLLL run
-```
-python train_NLLL.py
+python train.py --shapenet-root <ShapeNet dir> --cache-dir 'cache/'
 ```
 
 
-### Evaluating the network: NLLL
+### Evaluating the network
 
-To evaluate a trained NLLL model run 
+To evaluate:
 ```
-python eval_NLLL.py
+python eval.py --shapenet-root <ShapeNet dir> --cache-dir 'cache/'
 ```
